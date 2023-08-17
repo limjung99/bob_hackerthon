@@ -35,14 +35,15 @@ def search(data:Data):
     # 1 : 밥위키 이미지
     for text in describe_texts:
         query_text = queryToGpt(text)
-        print(query_text)
         query_texts.append(query_text)
     
     # Dal-e에게 쿼리
     for idx,text in enumerate(query_texts):
         image_url = queryToDalle(text)
-        print(image_url)
-        images_urls[idx]=image_url
+        images_urls[idx]= {
+            "image_url" : image_url ,
+            "text" : text
+        }
     
     return JSONResponse(content=images_urls)
 
