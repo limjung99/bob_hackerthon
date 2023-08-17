@@ -13,7 +13,7 @@ async function sendJSON() {
 
     console.log(data)
 
-    const response = await fetch("http://localhost:8000/api/generate",{
+    const response = await fetch("http://192.168.3.181:8080/api/generate",{
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

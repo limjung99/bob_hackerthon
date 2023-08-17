@@ -1,9 +1,12 @@
 from fastapi import FastAPI
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse,FileResponse
 from models import Data
 from logic import *
 from template import *
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from pathlib import Path
+
 
 app = FastAPI()
 
@@ -18,6 +21,7 @@ app.add_middleware(
 
 @app.get("/")
 async def root():
+    
     return "This is home for bob image generator. Enjoy it:)"
 
 @app.post("/api/generate/")
