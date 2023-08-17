@@ -4,12 +4,11 @@ import requests
 
 # 데이터 단어 추출
 from keybert import KeyBERT
-from kiwipiepy import Kiwi
+from kiwipiepy import Kiwi 
 from transformers import BertModel
 from konlpy.tag import Okt
 from sklearn.feature_extraction.text import TfidfVectorizer
 import numpy as np
-import word_extractor
 
 # open ai관련
 import os
@@ -20,6 +19,7 @@ stopwords = [
     "저", "그", "것", "들", "그녀", "인", "적", "하는", "입니다", "게", "와", "에게", "으로는", "도", "등", "에서", "로", "에는", "나", "해", "합니다", "일", "말", "인데", "그런", "데", "다"
 ]
 
+kiwi = Kiwi()
 
 # query to gpt api
 def queryToGpt(data):
@@ -54,7 +54,6 @@ def tokenizer(text):
 
 def main_word_extractor(text):
     text = text.replace("\n","")
-    kiwi = Kiwi()
     kiwi.analyze(text)
     nouns = noun_extractor(text)
     text = ' '.join(nouns)
