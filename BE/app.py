@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup as bs
 import requests
+from template import *
 
 
 # 데이터 단어 추출
@@ -11,23 +12,39 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 import numpy as np
 
 # open ai관련
-import os
+from config import conf
 import openai
 
-stopwords = [
-    "의", "가", "이", "은", "들", "는", "좀", "잘", "걍", "과", "도", "를", "으로", "자", "에", "와", "한", "하다",
-    "저", "그", "것", "들", "그녀", "인", "적", "하는", "입니다", "게", "와", "에게", "으로는", "도", "등", "에서", "로", "에는", "나", "해", "합니다", "일", "말", "인데", "그런", "데", "다"
-]
+api_key = conf["OPENAI_API_KEY"]
+openai.api_key = api_key
 
-kiwi = Kiwi()
 
 # query to gpt api
-def queryToGpt(data):
-    pass
+def queryToGpt(data:str):
+    query_text = data
+    query_text += "<- by using these features,Guess how this person looks like and "
+    query_text += "Just extract 5 appearance keywords in English and divide keywords using ','. "
+    # create with API ------------------------------
+    # create a chat completion
+    chat_completion = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo", 
+        messages=[{"role": "user", "content": query_text}],
+    )
+    return chat_completion.choices[0].message.content
+    
 
 # qeury to Dalle api 
 def queryToDalle(data):
-    pass
+     diffusion_query_text = generate_realistic()
+    print(diffusion_query_text)
+    # 이미지 create with API --------------------------
+    response = openai.Image.create(
+    prompt= diffusion_query_text,
+    n=2,
+    size = "1024x1024",
+    )
+    image_url = response["data"][0]["url"]
+    image_data = requests.get(image_url).content
 
 def crawlBobWiki(name:str):
     path = "https://kitribob.wiki/wiki/"
