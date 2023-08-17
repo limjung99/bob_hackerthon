@@ -13,6 +13,12 @@
                 border: 1px solid #ccc; /* 테두리 추가 */
                 resize: none; /* 사용자가 크기를 조절하지 못하도록 설정 */
             }
+            #container {
+                display: grid;
+                grid-template-columns: 1fr 1fr; /* 두 개의 열을 동일한 너비로 생성 */
+                gap: 10px; /* 이미지 사이의 간격 설정 */
+                align-items: center; /* 이미지를 수직 중앙에 정렬 */
+            }
         </style>
     </head>
     <body>
@@ -25,7 +31,10 @@
             이름 : <input type="text" id="namefield" name="name"><br>
             <br>내가생각하는나의이미지</br>
             <input type="text" id="textfield" name="st_id"><br>
-            <button type="button" onclick="sendJSON()">전송</button>
+            <button type="button" id="button" onclick="sendJSON()">전송</button>
         </form>
+        <div id="container">
+
+        </div>
     </body>
 </html>
