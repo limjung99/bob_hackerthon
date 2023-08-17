@@ -3,6 +3,12 @@ from models import Data
 from config import conf
 from app import *
 
+import requests
+import os
+import openai
+openai.api_key = '' # 추가
+
+
 app = FastAPI()
 
 @app.get("/")
@@ -20,14 +26,27 @@ async def search(data:Data):
         text = crawlBobWiki(name)
     else:
         text = describe
-    
-    # text -> bob위키 크롤링 텍스트 or 자기자신을 묘사한 텍스트
-    
+    text=text.replace("\n", "")
 
+    text = main_word_extractor(text)
+    # text -> 주요 단어 리스트(keybert and tfidf)
+
+
+
+
+
+    # 이미지 create with API
+    response = openai.Image.create(
+    prompt=text, 
+    n=2,
+    size = "1024x1024"
+    )
+    image_url = response["data"][0]["url"]
+    image_data = requests.get(image_url).content
 
     # 이 위에 구현해주면 되용
 
-    return text
+    return image_data # return 이미지
 
 
 
