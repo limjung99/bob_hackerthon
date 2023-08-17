@@ -27,7 +27,7 @@ async function sendJSON() {
         const jsons = jsonData[i];
         const imageURL = jsons["image_url"];
         const text = jsons["text"];
-        console.log(text);
+        
         const imageElement = document.createElement("img");
         imageElement.src = imageURL;
         imageElement.width=400;
@@ -43,7 +43,6 @@ async function sendJSON() {
     }
     button.disabled=false;
 }
-
 
 
   
