@@ -38,8 +38,8 @@ async function sendJSON() {
         div.appendChild(title);
         const imageElement = document.createElement("img");
         imageElement.src = imageURL;
-        imageElement.width=300;
-        imageElement.height=300;
+        imageElement.width=400;
+        imageElement.height=400;
         const container = document.getElementById("container");
         container.appendChild(imageElement);
         div.appendChild(container);
