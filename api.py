@@ -40,28 +40,29 @@ def search(data:Data):
 
 
     # 프롬프트 쿼리 튜닝 
-    query_text = generate_anime()
-    query_text += "<- based on this text."
-    query_text+=crawled_text
-    query_text+="<- based on this text, generate new describe text.  " 
+    query_text = crawled_text
     '''
     query_text+=important_keywords
     query_text+= " <- must apply this keywords."
     '''
-    query_text += "Maximum , 8 lines."
+    query_text += "Extract keywords at least 5, under 10."
 
-    # 이미지 묘사 create with API -----------------------
+    # create with API ------------------------------
     # create a chat completion
     chat_completion = openai.ChatCompletion.create(
         model="gpt-3.5-turbo", 
-        messages=[{"role": "user", "content": query_text}]
+        messages=[{"role": "user", "content": query_text}],
     )
     print(chat_completion.choices[0].message.content)
+
+    diffusion_query_text = generate_realistic()
+    diffusion_query_text += "Having these characteristic."
+    diffusion_query_text += chat_completion.choices[0].message.content
     # 이미지 create with API --------------------------
     response = openai.Image.create(
-    prompt= chat_completion.choices[0].message.content,
+    prompt= diffusion_query_text,
     n=2,
-    size = "1024x1024"
+    size = "1024x1024",
     )
     image_url = response["data"][0]["url"]
     image_data = requests.get(image_url).content
