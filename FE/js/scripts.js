@@ -24,26 +24,20 @@ async function sendJSON() {
     console.log(jsonData);
     /* http get으로 이미지 렌더링*/
     for(var i=0;i<2;i++){
-        const imageURL = jsonData[i];
-        const div = document.createElement("div");
-       
-        if(i===0){
-            const title = document.createElement("li");
-            title.innerText= "나의 BOB위키를 바탕으로 생성한 미지";
-        }
-        else{
-            const title = document.createElement("li");
-            title.innerText = "내가 생각한 나의 이미지를 바탕으로 생성한 이미지"
-        }
-        div.appendChild(title);
+        const jsons = jsonData[i];
+        const imageURL = jsons["image_url"];
+        const text = jsons["text"];
         const imageElement = document.createElement("img");
         imageElement.src = imageURL;
         imageElement.width=400;
         imageElement.height=400;
         const container = document.getElementById("container");
+        const liElement = document.createElement("li");
+        const childLiElement = document.createElement("li");
+        childLiElement.innerText = text;
+        i==0? liElement.innerText="나의 생각을 바탕으로 생성한 이미지. 반영키워드:"+text : liElement.innerText="BOB위키로 생성한 이미지. 반영키워드:"+text;
+        container.appendChild(liElement);
         container.appendChild(imageElement);
-        div.appendChild(container);
-        
     }
     button.disabled=false;
 }
