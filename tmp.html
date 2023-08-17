@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8" />
+</head>
+<body>
+  <h1>Authors</h1>
+  <ul id="authors">
+
+  </ul>
+  
+  <button onclick="doAction()">click me</button>
+
+  <script>
+
+     function doAction(){
+      
+      alert('시작');
+
+      const ul = document.getElementById('authors');
+      const list = document.createDocumentFragment();
+      const url = 'https://jsonplaceholder.typicode.com/users';
+
+      fetch(url)
+        .then((response) => {
+          console.log("통신 시작");
+          return response.json();
+        })
+        .then((data) => {
+          console.log(data);
+          let authors = data;
+
+          authors.map(function(author) {
+            let li = document.createElement('li');
+            let name = document.createElement('h2');
+            let email = document.createElement('span');
+
+            name.innerHTML = `${author.name}`;
+            email.innerHTML = `${author.email}`;
+
+            li.appendChild(name);
+            li.appendChild(email);
+            list.appendChild(li);
+            ul.appendChild(list);
+          });
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+
+      ul.appendChild(list);
+
+      console.log('종료');
+     }
+  </script>
+
+</body>
+</html>
