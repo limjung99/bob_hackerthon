@@ -12,9 +12,9 @@ openai.api_key = api_key
 # query to gpt api
 def queryToGpt(data:str):
     query_text = data
-    query_text += "<- by using these features,Guess how this person looks like and "
-    query_text += "Just extract 5 appearance keywords in English and divide keywords using ','. "
-    query_text += "<- Under 100 bytes."
+    query_text += "<- get just 5 keywords in English without any special characters in front of them, separated by commas."
+    #query_text += "Just extract 5 appearance keywords in English and divide keywords using ','. "
+    #query_text += "<- Under 100 bytes."
     # create with API ------------------------------
     # create a chat completion
     chat_completion = openai.ChatCompletion.create(
@@ -26,8 +26,8 @@ def queryToGpt(data:str):
 
 # qeury to Dalle api 
 def queryToDalle(data):
-    diffusion_query_text = generate_realistic()
-    diffusion_query_text += data
+    diffusion_query_text = data + generate_realistic()
+    # diffusion_query_text += data
     # 이미지 create with API --------------------------
     response = openai.Image.create(
     prompt= diffusion_query_text,
