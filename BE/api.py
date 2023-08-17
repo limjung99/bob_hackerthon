@@ -41,9 +41,16 @@ def search(data:Data):
     # Dal-e에게 쿼리
     for idx,text in enumerate(query_texts):
         image_url = queryToDalle(text)
+<<<<<<< HEAD
         print(image_url)
         images_urls[idx]=image_url
     
+=======
+        images_urls[idx]={
+            "image_url" : image_url ,
+            "text" : text
+        }
+>>>>>>> feature_02
     return JSONResponse(content=images_urls)
 
 
