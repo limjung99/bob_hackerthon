@@ -27,20 +27,23 @@ def search(data:Data):
     crawled_text = ""
     crawled_text = crawlBobWiki(name) # 밥위키 크롤링 데이터 
     crawled_text=crawled_text.replace("\n", "")
-    describe_texts = [crawled_text, self_describe] #밥위키, 내거
+    describe_texts = [self_describe, crawled_text] #밥위키, 내거
     query_texts = []
     images_urls = {}
     # GPT에게 쿼리 
-    # 0 : bob위키를 바탕으로 생성한 이미지 
-    # 1 : 내가 생각한 나의 이미지 
+    # 0 : 내가 생각한 이미지
+    # 1 : 밥위키 이미지
     for text in describe_texts:
         query_text = queryToGpt(text)
+        print(query_text)
         query_texts.append(query_text)
     
     # Dal-e에게 쿼리
     for idx,text in enumerate(query_texts):
         image_url = queryToDalle(text)
+        print(image_url)
         images_urls[idx]=image_url
+    
     return JSONResponse(content=images_urls)
 
 

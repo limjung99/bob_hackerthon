@@ -35,7 +35,6 @@ def queryToDalle(data):
     size = "1024x1024",
     )
     image_url = response["data"][0]["url"]
-    print(image_url)
     return image_url
 
 def crawlBobWiki(name:str):
